@@ -52,8 +52,16 @@ const MainScreen: React.FC<MainScreenProps> = ({
         <div className="bg-white rounded-3xl shadow-xl p-8">
           {/* Progress Circle */}
           <div className="flex justify-center mb-6">
-            <div className="relative w-48 h-48">
-              <svg className="w-48 h-48 transform -rotate-90">
+            <div
+              style={{ position: "relative", width: "192px", height: "192px" }}
+            >
+              <svg
+                width="192"
+                height="192"
+                viewBox="0 0 192 192"
+                style={{ transform: "rotate(-90deg)" }}
+              >
+                {/* Background circle */}
                 <circle
                   cx="96"
                   cy="96"
@@ -62,11 +70,12 @@ const MainScreen: React.FC<MainScreenProps> = ({
                   strokeWidth="12"
                   fill="none"
                 />
+                {/* Progress circle */}
                 <circle
                   cx="96"
                   cy="96"
                   r="88"
-                  stroke="#3b82f6"
+                  stroke="url(#progressGradient)"
                   strokeWidth="12"
                   fill="none"
                   strokeDasharray={`${2 * Math.PI * 88}`}
@@ -74,15 +83,54 @@ const MainScreen: React.FC<MainScreenProps> = ({
                     2 * Math.PI * 88 * (1 - progress / 100)
                   }`}
                   strokeLinecap="round"
-                  style={{ transition: "stroke-dashoffset 0.5s" }}
+                  style={{
+                    transition: "stroke-dashoffset 0.5s ease-in-out",
+                  }}
                 />
+                <defs>
+                  <linearGradient
+                    id="progressGradient"
+                    x1="0%"
+                    y1="0%"
+                    x2="100%"
+                    y2="100%"
+                  >
+                    <stop offset="0%" stopColor="#3b82f6" />
+                    <stop offset="100%" stopColor="#06b6d4" />
+                  </linearGradient>
+                </defs>
               </svg>
-              <div className="absolute inset-0 flex flex-col items-center justify-center">
-                <Droplets className="w-12 h-12 text-blue-500 mb-2" />
-                <div className="text-4xl font-bold text-gray-800">
+              <div
+                style={{
+                  position: "absolute",
+                  top: 0,
+                  left: 0,
+                  right: 0,
+                  bottom: 0,
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  justifyContent: "center",
+                }}
+              >
+                <Droplets
+                  style={{
+                    width: "48px",
+                    height: "48px",
+                    color: "#3b82f6",
+                    marginBottom: "8px",
+                  }}
+                />
+                <div
+                  style={{
+                    fontSize: "2.25rem",
+                    fontWeight: "bold",
+                    color: "#1f2937",
+                  }}
+                >
                   {totalWater}
                 </div>
-                <div className="text-sm text-gray-500">ml</div>
+                <div style={{ fontSize: "0.875rem", color: "#6b7280" }}>ml</div>
               </div>
             </div>
           </div>
